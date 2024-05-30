@@ -301,7 +301,7 @@
 \newcommand{\school}[1]{\def\tongjischool{#1}}
 \newcommand{\major}[1]{\def\tongjimajor{#1}}
 \newcommand{\student}[2]{\def\tongjiauthornumber{#1}\def\tongjiauthor{#2}}
-\newcommand{\thesistitle}[2]{\def\tongjithesistitle{#1}\def\tongjithesissubtitle{#2}}
+\newcommand{\thesistitle}[1]{\def\tongjithesistitle{#1}}
 \newcommand{\thesistitleeng}[2]{\def\tongjithesistitleeng{#1}\def\tongjithesissubtitleeng{#2}}
 \newcommand{\thesisadvisor}[1]{\def\tongjithesisadvisor{#1}}
 \newcommand{\thesisdate}[3]{\def\tongjithesisyear{#1}\def\tongjithesismonth{#2}\def\tongjithesisday{#3}}
@@ -320,13 +320,12 @@
 			\vskip 30pt
 
 			% 符合毕业设计模板（理工类），标题使用黑体小初
-			\zihao{-0}\heiti{本科毕业设计（论文）}
+			\zihao{-0}\heiti{数据库应用开发设计报告}
 			\vskip 60pt
 
 			% 符合毕业设计模板（理工类），此处使用黑体小二
 			\begin{information}{M{5em}M{22em}}
 				\zihao{-2}\heiti{课题名称} & \ulinecentered{\tongjithesistitle} \\
-				\zihao{-2}\heiti{副\enskip{}标\enskip{}题} & \ulinecentered{\tongjithesissubtitle} \\
 				\zihao{-2}\heiti{学\quad{}\quad{}院} & \ulinecentered{\tongjischool} \\
 				\zihao{-2}\heiti{专\quad{}\quad{}业} & \ulinecentered{\tongjimajor} \\
 				\zihao{-2}\heiti{学生姓名} & \ulinecentered{\tongjiauthor} \\
