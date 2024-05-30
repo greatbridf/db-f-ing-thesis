@@ -1,0 +1,62 @@
+\section{物理设计}
+
+\subsection{字段命名规范}
+
+在数据库设计过程中，遵循良好的字段命名规范不仅有助于提高可读性和维护性，还能减少错误并提高团队协作效率。首先，选择一种统一的命名风格并在整个数据库中保持一致是关键，如驼峰命名法（camelCase）或下划线命名法（snake\_case）。字段名称应清晰描述字段的含义和用途，避免使用模糊或缩写的名称。使用 Email 而不是 EM。此外，避免使用数据库管理系统的保留字作为字段名称，并确保名称拼写正确，防止引起歧义和误解。
+
+在设计各个表时，还应注意字段名称的长度适中，既不能过长，也不能过于简短以至于失去意义。例如，设计用户表 (User) 时，可以使用 UserID 作为主键，Username 表示用户登录名，Password 表示用户密码，Email 表示用户的电子邮件地址，Contact 表示用户的联系电话，以及 UserType 表示用户的角色。对于外键字段，可以使用特定的后缀（如 ID）来表明其引用的是另一个表的主键，这样可以清晰地展示字段之间的关系。
+
+\subsection{索引设计}
+
+在数据库索引设计中，首先，我们应该为数据量大、查询频繁的表建立索引，并对常作为查询条件的字段建立索引。其次，选择区分度高的列作为索引，尽量建立唯一索引，对于字符串类型的长字段可以建立前缀索引。最后，使用联合索引以减少单列索引的数量，并在涉及索引的列上使用 NOT NULL 约束，以避免空值对索引性能的影响。
+
+\paragraph{用户表}
+
+\begin{table}[!hpt]
+    \caption{用户表}
+    \label{tab:rela-user}
+    \centering
+    \begin{tabular}{@{}llll@{}} \toprule
+        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} (\$) \\ \midrule
+        UserID & 用户ID & INT & PRIMARY KEY \\
+        Username & 用户名 & VARCHAR(50) & NOT NULL \\
+        Password & 密码 & VARCHAR(50) & NOT NULL \\
+        Email & 邮箱 & VARCHAR(100) & NOT NULL, UNIQUE \\
+        Contact & 联系方式 & VARCHAR(15) &  \\
+        UserType & 用户类型 & VARCHAR(20) & NOT NULL \\ \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{完整性约束}
+
+\paragraph{用户表}
+
+主键约束：UserID 是用户表的主键，确保每个用户有唯一标识。
+唯一约束：Email 是唯一的，确保每个用户名和电子邮件地址在系统中是唯一的。
+非空约束：Username、Password、Email 和 UserType 是非空的，确保这些关键字段不会为空。
+
+\paragraph{事件表}
+
+主键约束：EventID 是事件表的主键，确保每个事件有唯一标识。
+非空约束：EventType、Description、EventTime、Location、ReporterID 和 Status 是非空的，确保这些关键字段不会为空。
+参照完整性：ReporterID 是外键，引用 User 表的 UserID，确保事件的上报者必须是系统中的有效用户。
+
+\paragraph{多媒体文件表}
+
+主键约束：FileID 是多媒体文件表的主键，确保每个文件有唯一标识。
+非空约束：EventID、FilePath 和 FileType 是非空的，确保这些关键字段不会为空。
+参照完整性：EventID 是外键，引用 Event 表的 EventID，确保每个文件必须关联到一个有效的事件。
+
+\paragraph{通知表}
+
+主键约束：NotifyID 是通知表的主键，确保每个通知有唯一标识。
+非空约束：ReceiverID、Content、SendTime 和 Status 是非空的，确保这些关键字段不会为空。
+参照完整性：ReceiverID 是外键，引用 User 表的 UserID，确保每个通知的接收者必须是系统中的有效用户。
+
+\paragraph{用户事件表}
+
+主键约束：UserID 和 EventID 共同组成复合主键，确保每个用户和事件的关联关系唯一。
+非空约束：UserID 和 EventID 是非空的，确保这些关键字段不会为空。
+参照完整性：
+UserID 是外键，引用 User 表的 UserID，确保每个记录中的用户必须是系统中的有效用户。
+EventID 是外键，引用 Event 表的 EventID，确保每个记录中的事件必须是系统中的有效事件。
