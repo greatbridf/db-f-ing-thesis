@@ -1,30 +1,141 @@
-\section{深度强化学习技术的应用}
+\section{概念设计}
 
-\subsection{在自动驾驶领域的应用}
+\subsection{实体和属性}
 
-\subsubsection{路径优化与驾驶决策}
+\subsubsection{用户 (User)}
 
-深度强化学习为自动驾驶汽车的控制提供了一种革命性的有效训练方法，允许车辆在复杂的驾驶环境中做出精确决策。事实上，深度强化学习已成为自动驾驶汽车中关键的路径规划和驾驶决策技术。
+用户实体存储了系统用户的基本信息，包括用户标识、用户名、密码、邮箱、联系方式和用户类型。主键是用户标识，用于唯一标识每个用户。如\cref{fig:entity-user}所示，具体介绍如下：
 
-在训练过程中，我们可以定义仿真或真实驾驶环境中的状态。其中车辆通过传感器捕获的环境信息作为输入，包括道路状况、障碍物、交通信号灯和行人等。智能车辆根据这些输入实时做出决策，如加速、减速、转弯或超车等。随后设计动作集和奖励函数来评估在特定状态下采取某一动作的效果，选择合适的深度强化学习算法，如DQN或DDPG。这些算法就可以通过神经网络模型来学习和优化驾驶策略和价值函数。最后，经过训练的模型在多种驾驶场景下进行测试以验证其性能，根据测试结果迭代优化模型参数和结构，以确保模型能够在实际驾驶中达到高安全性和高效率。
+UserID：用户标识，主键。每个用户的唯一标识符，用于区分不同的用户。
+Username：用户名，用户在系统中的登录名。每个用户名在系统中必须是唯一的。
+Password：密码，用户登录系统时使用的秘密信息。系统应对密码进行加密存储，确保用户账户的安全性。
+Email：邮箱，用户的电子邮件地址。用于系统通知、密码找回等功能，每个邮箱在系统中必须是唯一的。
+Contact：联系方式，用户的联系电话或其他联系方式。用于在必要时联系用户。
+UserType：用户类型，用于区分用户的角色，如普通用户、警察、管理员等。根据用户类型，可以赋予不同的权限和功能。
 
-研究表明，通过深度神经网络，自动驾驶系统能直接从原始图像映射到控制命令，提高了决策的速度和质量。例如，在开源赛车模拟器TORCS中，已经成功实现了车道保持和避障等控制任务，显示出比传统监督学习更好的鲁棒性。
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/db-img-01.png}
+    \caption{用户实体图}
+    \label{fig:entity-user}
+\end{figure}
 
-\subsubsection{控制策略优化}
+\subsubsection{事件 (Event)}
 
-在自动驾驶的控制模块，深度强化学习的应用主要集中于优化车辆的控制策略，使其能更加精确地执行决策模块的指令。通过持续与环境的交互和反馈，深度强化学习模型可以不断学习和调整，以达到更优的行驶性能。研究证明，使用深度强化学习训练的智能体可以在模拟环境中超越人类玩家的控制水平，并且能够应对复杂交通情境中的突发事件。例如，DDPG和DQN算法被用于处理行人横穿和紧急避障场景，实现自动驾驶汽车的自主制动和加速控制，提供了一个安全和流畅的驾驶体验。
+事件实体存储了系统中所有犯罪事件的详细信息，包括事件标识、事件类型、事件描述、发生时间、发生地点、上报用户ID和审核状态。主键是事件标识，外键是上报用户ID。如\cref{fig:entity-event}所示，具体介绍如下：
 
-\subsubsection{性能提升与场景适应性}
+EventID：事件标识，主键。每个事件的唯一标识符，用于区分不同的事件。
+EventType：事件类型，描述事件的类别，如盗窃、抢劫、袭击等。用于分类和统计不同类型的事件。
+Description：事件描述，详细描述事件的经过和相关信息。提供足够的信息以便处理和分析事件。
+EventTime：发生时间，事件发生的具体时间。用于记录事件的时间维度。
+Location：发生地点，事件发生的具体位置。用于记录事件的空间维度。
+ReporterID：上报用户ID，外键，引用用户实体中的UserID。用于标识事件的上报者。
+Status：审核状态，描述事件的处理状态，如未处理、处理中、已处理等。用于跟踪事件的处理进度。
 
-随着自动驾驶技术的不断进步，深度强化学习在车辆性能提升方面的应用也在不断拓展。深度强化学习不仅用于车辆的动态控制，还涉及能量管理和车身姿态调整等更广泛的应用。深度强化学习框架能够利用从多个传感器收集的复杂数据，实时调整车辆的各种操作参数，以适应多变的道路和交通条件。例如，深度强化学习已被应用于混合动力车辆的能量分配策略中，通过优化燃料消耗和电池使用，显著提高了能效和经济性。此外，通过端到端的控制方法，深度强化学习有助于简化自动驾驶系统的控制架构，提高其整体性能和适应性。
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/db-img-02.png}
+    \caption{事件实体图}
+    \label{fig:entity-event}
+\end{figure}
 
-\subsection{在其他各种领域中的应用}
+\subsubsection{多媒体文件 (MediaFile)}
 
-深度强化学习作为一种先进的机器学习方法，在多个领域展示了其独特的优势和广泛的应用潜力。
-\subsubsection{在电子游戏中的应用}
+多媒体文件实体存储了与犯罪事件相关的文件信息，包括文件标识、事件ID、文件路径和文件类型。主键是文件标识，外键是事件ID。如\cref{fig:entity-mediafile}所示，具体介绍如下：
 
-深度强化学习最初广泛应用于视频游戏领域，例如在Atari 2600游戏和更复杂的环境如ViZDoom和StarCraft II中表现突出。通过大量的模拟和试错，深度强化学习能够学习如何在这些游戏中达到甚至超过人类的表现。这不仅展示了深度强化学习算法的通用性，也推动了算法在处理复杂动态环境中的决策能力的提升。
+FileID：文件标识，主键。每个文件的唯一标识符，用于区分不同的文件。
+EventID：事件ID，外键，引用事件实体中的EventID。用于标识文件所属的事件。
+FilePath：文件路径，文件在系统中的存储路径。用于定位和访问文件。
+FileType：文件类型，描述文件的类型，如图片、视频、音频等。用于分类和处理不同类型的文件。
 
-\subsubsection{在导航领域的应用}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/db-img-03.png}
+    \caption{多媒体文件实体图}
+    \label{fig:entity-mediafile}
+\end{figure}
 
-在导航领域，深度强化学习的应用表现出了其卓越的导航策略和路径规划能力。深度强化学习算法能够通过与环境的实时交互学习如何在不同的导航任务中有效地找到最优路径。例如，在迷宫导航中，深度强化学习不仅能够指导智能体找到从起点到终点的最短路径，还能帮助智能体避开障碍和解决环境中的动态变化。在更复杂的应用如室内导航和城市街景导航中，深度强化学习利用从环境中获得的丰富感知数据，如图像和传感器信息，进行深入学习，从而提高导航的精确性和鲁棒性。
+\subsubsection{通知 (Notification)}
+
+通知实体存储了系统中发送给用户的通知信息，包括通知标识、接收用户ID、内容、发送时间和状态。主键是通知标识，外键是接收用户ID。如\cref{fig:entity-notification}所示，具体介绍如下：
+
+NotifyID：通知标识，主键。每个通知的唯一标识符，用于区分不同的通知。
+ReceiverID：接收用户ID，外键，引用用户实体中的UserID。用于标识通知的接收者。
+Content：内容，通知的具体内容。用于向用户传达信息。
+SendTime：发送时间，通知发送的具体时间。用于记录通知的时间维度。
+Status：状态，描述通知的状态，如未读、已读等。用于跟踪通知的处理情况。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/db-img-04.png}
+    \caption{通知实体图}
+    \label{fig:entity-notification}
+\end{figure}
+
+\subsubsection{用户事件 (UserEvent)}
+
+用户事件实体存储了用户与事件之间的关联信息，包括用户ID和事件ID。复合主键是用户ID和事件ID，分别作为外键引用用户实体和事件实体。如\cref{fig:entity-userevent}所示，具体介绍如下：
+
+UserID：用户ID，外键，引用用户实体中的UserID。用于标识关联的用户。
+EventID：事件ID，外键，引用事件实体中的EventID。用于标识关联的事件。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/db-img-05.png}
+    \caption{用户事件实体图}
+    \label{fig:entity-userevent}
+\end{figure}
+
+\subsection{实体联系设计}
+
+\subsubsection{用户与事件之间的联系}
+
+联系类型：多对多
+
+联系描述：一个用户可以上报多个事件，一个事件也可以由多个用户上报（在不同时间或不同地点的同一事件）。为了实现多对多的关系，我们使用一个关联表 UserEvent 来管理用户和事件之间的联系。用户与事件之间的 E-R 图如\cref{fig:rela-user-event}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/db-img-rela-01.png}
+    \caption{用户事件实体联系图}
+    \label{fig:rela-user-event}
+\end{figure}
+
+\subsubsection{用户与通知之间的联系}
+
+联系类型：一对多
+
+联系描述：一个用户可以收到多个通知，但每个通知只能发送给一个用户。用户与通知之间的 E-R 图如\cref{fig:rela-user-notification}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/db-img-rela-02.png}
+    \caption{用户通知实体联系图}
+    \label{fig:rela-user-notification}
+\end{figure}
+
+\subsubsection{事件与多媒体文件之间的联系}
+
+联系类型：一对多
+
+联系描述：一个事件可以关联多个多媒体文件，但每个多媒体文件只能关联一个事件。事件与多媒体文件之间的 E-R 图如\cref{fig:rela-event-mediafile}所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/db-img-rela-03.png}
+    \caption{事件多媒体文件实体联系图}
+    \label{fig:rela-event-mediafile}
+\end{figure}
+
+
+
+\subsection{全局E-R图设计}
+
+城市犯罪事件管理平台的全局E-R图，如\cref{fig:rela-tot}，描述了系统中各个实体及其相互关系，通过全局E-R图，可以直观地看到系统中各实体之间的关系，确保数据库设计能够有效支持系统的功能需求和业务逻辑。这种设计方式保证了数据的完整性和一致性，同时便于后续的系统开发和维护。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/db-img-rela-tot.png}
+    \caption{全局E-R图}
+    \label{fig:rela-tot}
+\end{figure}
