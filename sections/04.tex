@@ -24,14 +24,12 @@ UserEvent(\underline{UserID}, \underline{EventID});
 
 \subsection{关系表设计}
 
-\paragraph{用户表}
-
 \begin{table}[!hpt]
     \caption{用户表}
     \label{tab:rela-user}
     \centering
     \begin{tabular}{@{}llll@{}} \toprule
-        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} (\$) \\ \midrule
+        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} \\ \midrule
         UserID & 用户ID & INT & PRIMARY KEY \\
         Username & 用户名 & VARCHAR(50) & NOT NULL \\
         Password & 密码 & VARCHAR(50) & NOT NULL \\
@@ -41,14 +39,12 @@ UserEvent(\underline{UserID}, \underline{EventID});
     \end{tabular}
 \end{table}
 
-\paragraph{事件表}
-
 \begin{table}[!hpt]
     \caption{事件表}
     \label{tab:rela-event}
     \centering
     \begin{tabular}{@{}llll@{}} \toprule
-        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} (\$) \\ \midrule
+        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} \\ \midrule
         EventID & 事件ID & INT & PRIMARY KEY \\
         EventType & 事件类型 & VARCHAR(50) & NOT NULL \\
         Description & 事件描述 & VARCHAR(50) & NOT NULL \\
@@ -59,14 +55,12 @@ UserEvent(\underline{UserID}, \underline{EventID});
     \end{tabular}
 \end{table}
 
-\paragraph{多媒体文件表}
-
 \begin{table}[!hpt]
     \caption{多媒体文件表}
     \label{tab:rela-mediafile}
     \centering
     \begin{tabular}{@{}llll@{}} \toprule
-        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} (\$) \\ \midrule
+        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} \\ \midrule
         FileID & 文件ID & INT & PRIMARY KEY \\
         EventID & 事件ID & INT & FOREIGN KEY REFERENCES Event(EventID) \\
         FilePath & 文件路径 & VARCHAR(255) & NOT NULL \\
@@ -74,14 +68,12 @@ UserEvent(\underline{UserID}, \underline{EventID});
     \end{tabular}
 \end{table}
 
-\paragraph{通知表}
-
 \begin{table}[!hpt]
     \caption{通知表}
     \label{tab:rela-notification}
     \centering
     \begin{tabular}{@{}llll@{}} \toprule
-        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} (\$) \\ \midrule
+        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} \\ \midrule
         NotifyID & 通知ID & INT & PRIMARY KEY \\
         ReceiverID & 接收用户ID & INT & FOREIGN KEY REFERENCES User(UserID) \\
         Content & 通知内容 & TEXT & NOT NULL \\
@@ -90,14 +82,12 @@ UserEvent(\underline{UserID}, \underline{EventID});
     \end{tabular}
 \end{table}
 
-\paragraph{用户事件表}
-
 \begin{table}[!hpt]
     \caption{用户事件表}
     \label{tab:rela-user-event}
     \centering
     \begin{tabular}{@{}llll@{}} \toprule
-        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} (\$) \\ \midrule
+        \textbf{属性名} & \textbf{说明} & \textbf{数据类型} & \textbf{约束} \\ \midrule
         UserID & 用户ID & INT & FOREIGN KEY REFERENCES User(UserID) \\
         EventID & 事件ID & INT & FOREIGN KEY REFERENCES Event(EventID) \\
          & & & PRIMARY KEY (UserID, EventID) \\ \bottomrule
@@ -109,42 +99,69 @@ UserEvent(\underline{UserID}, \underline{EventID});
 为了判断城市犯罪事件管理平台的数据库设计是否满足第三范式 (3NF)，我们需要分析每个关系，并确保它们满足以下条件：
 
 第一范式 (1NF)：表中的每个列都包含不可再分的原子值，没有重复的列。
+
 第二范式 (2NF)：满足 1NF，并且表中的每列都完全依赖于候选键，而不是部分依赖。
+
 第三范式 (3NF)：满足 2NF，并且表中的每列都与候选键直接相关，而不是传递相关。
 
 \paragraph{用户表}
+
 列：用户 ID (主键)、用户名、密码、邮箱、联系方式、用户类型
+
 1NF：每个列包含不可再分的原子值，没有重复的列。
+
 2NF：每个列都完全依赖于主键 (UserID)，不存在部分依赖。
+
 3NF：每个列都直接依赖于主键 (UserID)，不存在传递依赖。
+
 结论：用户表满足 1NF、2NF 和 3NF。
 
 \paragraph{事件表}
+
 列：事件 ID (主键)、事件类型、事件描述、发生时间、发生地点、上报用户 ID、审核状态
+
 1NF：每个列包含不可再分的原子值，没有重复的列。
+
 2NF：每个列都完全依赖于主键 (EventID)，不存在部分依赖。
+
 3NF：每个列都直接依赖于主键 (EventID)，不存在传递依赖。
+
 结论：事件表满足 1NF、2NF 和 3NF。
 
 \paragraph{多媒体文件表}
+
 列：文件 ID (主键)、事件 ID、文件路径、文件类型
+
 1NF：每个列包含不可再分的原子值，没有重复的列。
+
 2NF：每个列都完全依赖于主键 (FileID)，不存在部分依赖。
+
 3NF：每个列都直接依赖于主键 (FileID)，不存在传递依赖。
+
 结论：多媒体文件表满足 1NF、2NF 和 3NF。
 
 \paragraph{通知表}
+
 列：通知 ID (主键)、接收用户 ID、内容、发送时间、状态
+
 1NF：每个列包含不可再分的原子值，没有重复的列。
+
 2NF：每个列都完全依赖于主键 (NotifyID)，不存在部分依赖。
+
 3NF：每个列都直接依赖于主键 (NotifyID)，不存在传递依赖。
+
 结论：通知表满足 1NF、2NF 和 3NF。
 
 \paragraph{用户事件表}
+
 列：用户 ID (复合主键)、事件 ID (复合主键)
+
 1NF：每个列包含不可再分的原子值，没有重复的列。
+
 2NF：每个列都完全依赖于复合主键 (UserID, EventID)，不存在部分依赖。
+
 3NF：每个列都直接依赖于复合主键 (UserID, EventID)，不存在传递依赖。
+
 结论：用户事件表满足 1NF、2NF 和 3NF。
 
 通过分析前述设计的每个关系，可以得出它们都满足 1NF、2NF 和 3NF 的要求。每个关系都有合适的主键，并且每个非主属性都完全依赖于主键，且不存在传递依赖。因此，城市犯罪事件管理平台的数据库设计满足第三范式 (3NF)。

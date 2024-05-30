@@ -10,8 +10,6 @@
 
 在数据库索引设计中，首先，我们应该为数据量大、查询频繁的表建立索引，并对常作为查询条件的字段建立索引。其次，选择区分度高的列作为索引，尽量建立唯一索引，对于字符串类型的长字段可以建立前缀索引。最后，使用联合索引以减少单列索引的数量，并在涉及索引的列上使用 NOT NULL 约束，以避免空值对索引性能的影响。
 
-\paragraph{用户表}
-
 \begin{table}[!hpt]
     \caption{用户表}
     \label{tab:rela-user}
@@ -32,31 +30,42 @@
 \paragraph{用户表}
 
 主键约束：UserID 是用户表的主键，确保每个用户有唯一标识。
+
 唯一约束：Email 是唯一的，确保每个用户名和电子邮件地址在系统中是唯一的。
+
 非空约束：Username、Password、Email 和 UserType 是非空的，确保这些关键字段不会为空。
 
 \paragraph{事件表}
 
 主键约束：EventID 是事件表的主键，确保每个事件有唯一标识。
+
 非空约束：EventType、Description、EventTime、Location、ReporterID 和 Status 是非空的，确保这些关键字段不会为空。
+
 参照完整性：ReporterID 是外键，引用 User 表的 UserID，确保事件的上报者必须是系统中的有效用户。
 
 \paragraph{多媒体文件表}
 
 主键约束：FileID 是多媒体文件表的主键，确保每个文件有唯一标识。
+
 非空约束：EventID、FilePath 和 FileType 是非空的，确保这些关键字段不会为空。
+
 参照完整性：EventID 是外键，引用 Event 表的 EventID，确保每个文件必须关联到一个有效的事件。
 
 \paragraph{通知表}
 
 主键约束：NotifyID 是通知表的主键，确保每个通知有唯一标识。
+
 非空约束：ReceiverID、Content、SendTime 和 Status 是非空的，确保这些关键字段不会为空。
+
 参照完整性：ReceiverID 是外键，引用 User 表的 UserID，确保每个通知的接收者必须是系统中的有效用户。
 
 \paragraph{用户事件表}
 
 主键约束：UserID 和 EventID 共同组成复合主键，确保每个用户和事件的关联关系唯一。
+
 非空约束：UserID 和 EventID 是非空的，确保这些关键字段不会为空。
+
 参照完整性：
+
 UserID 是外键，引用 User 表的 UserID，确保每个记录中的用户必须是系统中的有效用户。
 EventID 是外键，引用 Event 表的 EventID，确保每个记录中的事件必须是系统中的有效事件。
